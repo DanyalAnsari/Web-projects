@@ -1,0 +1,77 @@
+const questions = [
+  {
+    question: "Which is the largest animal in the world ?",
+    answers: [
+      { text: "Shark", correct: "False" },
+      { text: "Giraffe", correct: "False" },
+      { text: "Elephent", correct: "False" },
+      { text: "Whale", correct: "Correct" },
+    ],
+  },
+  {
+    question: "Which is the fastest animal in the world ?",
+    answers: [
+      { text: "Tortoise", correct: "False" },
+      { text: "Deer", correct: "False" },
+      { text: "Leopard", correct: "Correct" },
+      { text: "Tiger", correct: "False" },
+    ],
+  },
+  {
+    question: "Which is the largest organ in the human body ?",
+    answers: [
+      { text: "Skin", correct: "Correct" },
+      { text: "Stomach", correct: "False" },
+      { text: "Liver", correct: "False" },
+      { text: "Intestine", correct: "Correct" },
+    ],
+  },
+  {
+    question: "Which is the Largest planet in the solar system ?",
+    answers: [
+      { text: "Shark", correct: "False" },
+      { text: "Giraffe", correct: "False" },
+      { text: "Elephent", correct: "False" },
+      { text: "Whale", correct: "Correct" },
+    ],
+  },
+];
+
+const questionElement = document.getElementById("question");
+const next = document.getElementById("next-btn");
+const answerBtn = document.getElementById("answer-buttons");
+let score = 0;
+let index = 0;
+
+const startQuiz = () => {
+  if (index == 0) {
+    document.getElementsByClassName("quiz")[0].style.display = "block";
+    next.innerHTML = "Next";
+  }
+  ShowQuestion(index);
+  index = index + 1;
+};
+const ShowQuestion = (index) => {
+  questionElement.innerHTML = `Question ${index+1} .${questions[index].question}`;
+  questions[index].answers.forEach((answer, idx) => {
+    if (index == 0) {
+      answerElementCreation(answer);
+    } else {
+      answerBtn.children[idx].innerHTML = answer.text;
+    }
+  });
+
+};
+
+const answerElementCreation = (answer) => {
+  const answerElement = document.createElement("button");
+  answerElement.classList = "btn";
+  answerBtn.appendChild(answerElement);
+  answerElement.innerHTML = answer.text;
+  answerElement.addEventListener('click', (e)=>correctCheck(e))
+};
+
+const correctCheck=(e)=>{
+  e.target.innerHTML === questions[index].answers[idx] 
+}
+next.addEventListener("click", () => startQuiz());

@@ -1,0 +1,40 @@
+// Cache DOM elements to avoid repetitive lookups
+const dayElem = document.getElementById('day');
+const hourElem = document.getElementById('hour');
+const minElem = document.getElementById('min');
+const secElem = document.getElementById('sec');
+
+// Define the target date only once
+const targetDate = new Date("2024-08-22T00:00:00");
+
+// Function to update the countdown
+const updateCountdown = () => {
+    const now = new Date();
+    const timeDiff = targetDate - now;
+    
+    if (timeDiff <= 0) {
+        // Handle the case when the countdown is finished
+        dayElem.textContent = '00';
+        hourElem.textContent = '00';
+        minElem.textContent = '00';
+        secElem.textContent = '00';
+        return;
+    }
+    
+    const calSec = Math.floor(timeDiff / 1000) % 60;
+    const calMin = Math.floor(timeDiff / 1000 / 60) % 60;
+    const calHour = Math.floor(timeDiff / 1000 / 60 / 60) % 24;
+    const calDay = Math.floor(timeDiff / 1000 / 60 / 60 / 24);
+    
+    // Update the countdown display with zero-padding
+    dayElem.textContent = calDay.toString().padStart(2, '0');
+    hourElem.textContent = calHour.toString().padStart(2, '0');
+    minElem.textContent = calMin.toString().padStart(2, '0');
+    secElem.textContent = calSec.toString().padStart(2, '0');
+};
+
+// Start the countdown and update every second
+setInterval(updateCountdown, 1000);
+
+// Initial call to display countdown immediately on page load
+updateCountdown();
